@@ -170,6 +170,27 @@ A simplified order management system:
 7. Order confirmation notification is published (SNS in prod)
 8. Fulfillment job is enqueued (SQS in prod)
 
+## Documentation
+
+Detailed documentation lives in [`docs/`](docs/):
+
+| Document | Description |
+|---|---|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System architecture, component design, domain workflows |
+| [TESTING.md](docs/TESTING.md) | Testing strategy, infrastructure, conventions |
+| [DATABASE.md](docs/DATABASE.md) | Schema, data models, relationships |
+| [MIGRATIONS.md](docs/MIGRATIONS.md) | Flyway migration strategy |
+| [RELEASE.md](docs/RELEASE.md) | Release process |
+| [SECURITY.md](docs/SECURITY.md) | Application security design |
+| [HOW_TO.md](docs/HOW_TO.md) | Setup, configuration, gotchas, troubleshooting |
+
+Feature documentation in [`docs/feature/`](docs/feature/):
+
+| Feature | Description |
+|---|---|
+| [ORDER_CREATION.md](docs/feature/ORDER_CREATION.md) | Order creation workflow — the primary feature |
+| [ORDER_RETRIEVAL.md](docs/feature/ORDER_RETRIEVAL.md) | Order retrieval by ID |
+
 ## Agent Skills
 
 This project includes reusable [Claude Code skills](https://docs.anthropic.com/en/docs/claude-code/skills) in `.claude/skills/` that codify the patterns demonstrated here. Skills are Java/Spring Boot specific — for other languages, create a separate reference project with language-appropriate skills.
@@ -185,6 +206,12 @@ This project includes reusable [Claude Code skills](https://docs.anthropic.com/e
 | `naming-conventions` | Class suffix rules — `*Service` for orchestrators, `*Client` for external boundaries, descriptive names for standalone logic. |
 | `entity-design` | JPA entities with `with*` fluent mutators, pure computation returning result records, no public setters. |
 | `dependency-injection` | Constructor injection only, no inline dependency construction, `@Bean` methods own object creation. |
+
+#### Project
+
+| Skill | Description |
+|---|---|
+| `project-documentation` | Required documentation structure — root files (README, CONTRIBUTING, LICENSE, SECURITY), docs/ directory (architecture, testing, database, migrations, release, security design, how-to, feature docs). |
 
 #### Testing
 

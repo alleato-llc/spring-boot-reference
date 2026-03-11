@@ -40,6 +40,19 @@ docker-compose down     # Stop Postgres when done
 - **Test isolation**: Random IDs, fresh data per test, contextual domain in `@BeforeEach`.
 - Tests live in the **same package** as the class they test.
 
+## Documentation
+
+Detailed documentation lives in `docs/`:
+- `docs/ARCHITECTURE.md` — System architecture, component design, domain workflows
+- `docs/TESTING.md` — Testing strategy, infrastructure, conventions
+- `docs/DATABASE.md` — Schema, data models, relationships
+- `docs/MIGRATIONS.md` — Flyway migration strategy
+- `docs/RELEASE.md` — Release process
+- `docs/SECURITY.md` — Application security design
+- `docs/HOW_TO.md` — Detailed setup, configuration, gotchas, troubleshooting
+- `docs/feature/ORDER_CREATION.md` — Order creation workflow (main feature)
+- `docs/feature/ORDER_RETRIEVAL.md` — Order retrieval
+
 ## Key Files
 
 - `docker-compose.yml` — Postgres for integration tests
@@ -70,6 +83,9 @@ Available skills in `.claude/skills/`:
 - **naming-conventions** — Class suffix rules (`*Service`, `*Client`, `*Calculator`)
 - **entity-design** — JPA entities with `with*` fluent mutators, result records for computation
 - **dependency-injection** — Constructor injection only, no inline dependency construction, `@Bean` methods own object creation
+
+### Project
+- **project-documentation** — Required documentation structure (README, docs/, feature docs)
 
 ### Testing
 - **adding-integration-tests** — Integration tests for API endpoints
