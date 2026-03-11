@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/orders_test
+    username: test
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    clean-disabled: false
+
+# AWS service configuration (matches the test SDK client known resources)
+fulfillment:
+  queue:
+    url: https://sqs.us-east-1.amazonaws.com/123456789/order-fulfillment.fifo
+
+notification:
+  topic:
+    arn-prefix: arn:aws:sns:us-east-1:123456789
