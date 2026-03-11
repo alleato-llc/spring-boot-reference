@@ -56,7 +56,12 @@ src/test/java/com/alleato/ecommerce/ordering/
 │   └── aws/clients/    AWS SDK test doubles
 │       ├── TestSqsClient.java          (test SqsClient — validates queues, records calls)
 │       ├── TestSnsClient.java          (test SnsClient — validates topics, records calls)
-│       └── TestS3Client.java           (test S3Client — in-memory storage, validates buckets)
+│       ├── TestS3Client.java           (test S3Client — in-memory storage, validates buckets)
+│       └── simulators/  Simulator pattern (for SDKs without interfaces)
+│           ├── ExpectedException.java  (configurable exception rules)
+│           ├── SqsSimulator.java       (stateless — fire-and-forget messages)
+│           ├── SnsSimulator.java       (stateless — fire-and-forget publications)
+│           └── S3Simulator.java        (stateful — in-memory object store)
 ├── controller/
 │   └── OrderApiIntegrationTest.java    (integration test)
 ├── repository/
@@ -190,6 +195,7 @@ This project includes reusable [Claude Code skills](https://docs.anthropic.com/e
 | `test-data-isolation` | Ensures tests are independent via random IDs, fresh data per test, and contextual domain setup in `@BeforeEach`. |
 | `adding-flyway-migrations` | Adds a Flyway migration and updates the schema test. |
 | `integrating-external-sdk` | Integrates an external service that has a public SDK (e.g., AWS). Creates an SDK-level test double that intercepts SDK calls. |
+| `integrating-external-sdk-no-interface` | Simulator pattern for SDK clients with no interface. Produces a mock client, tracks invocations, and exposes a domain-language API. |
 | `integrating-external-api` | Integrates an external service with no SDK. Defines a client interface with an HTTP implementation and an in-memory test double. |
 | `setting-up-docker-for-tests` | Sets up Docker-managed Postgres for integration tests. Includes a decision framework for what to dockerize vs use test doubles. |
 

@@ -77,5 +77,6 @@ Available skills in `.claude/skills/`:
 - **test-data-isolation** — Test independence via random IDs and fresh data per test
 - **adding-flyway-migrations** — Database migrations + schema test
 - **integrating-external-sdk** — SDK-level test doubles (AWS)
+- **integrating-external-sdk-no-interface** — Simulator pattern for SDK clients with no interface
 - **integrating-external-api** — Interface-level test doubles (REST APIs)
 - **setting-up-docker-for-tests** — Docker infrastructure for tests
