@@ -84,6 +84,7 @@ Available skills in `.claude/skills/`:
 - **entity-design** — JPA entities with `with*` fluent mutators, result records for computation
 - **dependency-injection** — Constructor injection only, no inline dependency construction, `@Bean` methods own object creation
 - **error-handling** — Minimal exception hierarchy (abstract `OrderingException` base + 4 subclasses), centralized `@ControllerAdvice` maps exception type to HTTP status, context maps for structured error details
+- **configuration** — `@ConfigurationProperties` POJOs with project-name prefix, environment variable binding, nested config decomposition, local dev defaults, sensitive value protection
 - **logging** — SLF4J + Logback, structured JSON output, `@Redacted` annotation for sensitive field protection, log level guidelines
 - **tracing** — Distributed tracing via Micrometer Tracing, correlation ID propagation (HTTP auto, SQS/SNS via message attributes), `TraceAttributes`/`TraceContext` utilities
 

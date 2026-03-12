@@ -23,7 +23,8 @@ ${org}/                                  e.g., com.example/
     │   ├── service/                     Orchestrators — coordinate multiple components
     │   ├── models/                      Domain entities, DTOs, value objects, enums
     │   ├── repository/                  Data access (Spring Data JPA)
-    │   └── exception/                   Domain exception hierarchy ({ProjectName}*Exception)
+    │   ├── exception/                   Domain exception hierarchy ({ProjectName}*Exception)
+    │   └── config/                      @ConfigurationProperties POJOs ({ProjectName}Configuration)
     ├── ${subdomain}/                    Subdomain (flat) — e.g., payment/
     │   ├── *Client.java                 (interface — contract boundary)
     │   └── *ClientImpl.java             (implementation, prefixed by technology)

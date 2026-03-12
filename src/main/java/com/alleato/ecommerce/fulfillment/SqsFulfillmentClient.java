@@ -1,7 +1,7 @@
 package com.alleato.ecommerce.fulfillment;
 
+import com.alleato.ecommerce.ordering.config.OrderingConfiguration;
 import com.alleato.tracing.TraceAttributes;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
@@ -17,18 +17,18 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 public class SqsFulfillmentClient implements FulfillmentClient {
 
     private final SqsClient sqsClient;
-    private final String queueUrl;
+    private final OrderingConfiguration.Fulfillment config;
 
     public SqsFulfillmentClient(SqsClient sqsClient,
-                               @Value("${fulfillment.queue.url}") String queueUrl) {
+                               OrderingConfiguration.Fulfillment config) {
         this.sqsClient = sqsClient;
-        this.queueUrl = queueUrl;
+        this.config = config;
     }
 
     @Override
     public void enqueue(String message, String deduplicationId) {
         sqsClient.sendMessage(SendMessageRequest.builder()
-                .queueUrl(queueUrl)
+                .queueUrl(config.getQueueUrl())
                 .messageBody(message)
                 .messageGroupId("order-fulfillment")
                 .messageDeduplicationId(deduplicationId)

@@ -3,14 +3,20 @@ spring:
     name: ordering
   datasource:
     url: jdbc:postgresql://localhost:5432/orders
-    username: orders
-    password: orders
+    username: ${ORDERING_DATABASE_USERNAME:orders}
+    password: ${ORDERING_DATABASE_PASSWORD:orders}
   jpa:
     hibernate:
       ddl-auto: validate
     open-in-view: false
   flyway:
     enabled: true
+
+ordering:
+  fulfillment:
+    queue-url: ${ORDERING_FULFILLMENT_QUEUE_URL:https://sqs.us-east-1.amazonaws.com/123456789/order-fulfillment.fifo}
+  notification:
+    topic-arn-prefix: ${ORDERING_NOTIFICATION_TOPIC_ARN_PREFIX:arn:aws:sns:us-east-1:123456789}
 
 management:
   tracing:

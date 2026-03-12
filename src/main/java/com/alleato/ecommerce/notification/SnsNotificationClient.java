@@ -1,7 +1,7 @@
 package com.alleato.ecommerce.notification;
 
+import com.alleato.ecommerce.ordering.config.OrderingConfiguration;
 import com.alleato.tracing.TraceAttributes;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
@@ -17,17 +17,17 @@ import software.amazon.awssdk.services.sns.model.PublishRequest;
 public class SnsNotificationClient implements NotificationClient {
 
     private final SnsClient snsClient;
-    private final String topicArnPrefix;
+    private final OrderingConfiguration.Notification config;
 
     public SnsNotificationClient(SnsClient snsClient,
-                                  @Value("${notification.topic.arn-prefix}") String topicArnPrefix) {
+                                  OrderingConfiguration.Notification config) {
         this.snsClient = snsClient;
-        this.topicArnPrefix = topicArnPrefix;
+        this.config = config;
     }
 
     @Override
     public void publish(String topic, String messageBody) {
-        String topicArn = topicArnPrefix + ":" + topic;
+        String topicArn = config.getTopicArnPrefix() + ":" + topic;
         snsClient.publish(PublishRequest.builder()
                 .topicArn(topicArn)
                 .message(messageBody)
