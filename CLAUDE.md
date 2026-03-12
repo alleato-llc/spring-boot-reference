@@ -4,7 +4,7 @@
 
 Spring Boot reference project codifying best practices for Java/Spring Boot applications — project structure, component design, testing patterns, and more. Skills are added incrementally as patterns are established.
 
-This is one of several reference projects tracked by [engineering-standards](../engineering-standards/). See the skill matrix there for cross-project coverage, gaps, and priorities.
+This is one of several reference projects tracked by [engineering-standards](../engineering-standards/). See the skill matrix there for cross-project coverage, gaps, and priorities. When adding, removing, or renaming skills in this project, update the skill matrix in engineering-standards to stay in sync.
 
 ## Build & Test
 
