@@ -158,6 +158,19 @@ docker-compose up -d    # Start Postgres
 docker-compose down     # Stop Postgres when done
 ```
 
+## Tooling
+
+| Tool | Purpose | Command |
+|---|---|---|
+| **Spotless** | Auto-formatting (google-java-format) | `./gradlew spotlessApply` / `spotlessCheck` |
+| **Checkstyle** | Linting (Google-derived ruleset) | `./gradlew checkstyleMain checkstyleTest` |
+| **OWASP Dependency-Check** | Dependency vulnerability scanning | `./gradlew dependencyCheckAnalyze` |
+| **Pre-commit hook** | Runs formatting + linting before commit | Auto-installed on first build |
+| **GitHub Actions CI** | Formatting, linting, tests, dependency scan | Runs on push/PR to `main` |
+| **Dependabot** | Automated dependency updates | Gradle weekly, Actions weekly, Docker monthly |
+
+See [engineering-standards/BOOTSTRAP.md](../engineering-standards/BOOTSTRAP.md) for the full bootstrap requirements and known gotchas across all reference projects.
+
 ## Domain
 
 A simplified order management system:

@@ -114,6 +114,22 @@ docker-compose up -d    # Start Postgres
 docker-compose down     # Stop when done
 ```
 
+### Formatting & Linting
+
+A **pre-commit hook** is auto-installed on your first build (`./gradlew classes`). It runs `spotlessCheck` and `checkstyleMain checkstyleTest` before each commit.
+
+To format all Java files:
+
+```bash
+./gradlew spotlessApply
+```
+
+To verify formatting and linting locally (same checks as CI):
+
+```bash
+./gradlew spotlessCheck checkstyleMain checkstyleTest
+```
+
 ## Project Conventions
 
 - **Package structure**: Domain-oriented — core domain layered, supporting subdomains flat; 5–8 files per package

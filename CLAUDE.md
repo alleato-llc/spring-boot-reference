@@ -18,6 +18,16 @@ docker-compose up -d    # Start Postgres (required for integration tests)
 docker-compose down     # Stop Postgres when done
 ```
 
+### Formatting & Linting
+
+```bash
+./gradlew spotlessApply           # Auto-format all Java files (google-java-format)
+./gradlew spotlessCheck           # Verify formatting without modifying files
+./gradlew checkstyleMain checkstyleTest  # Run Checkstyle linting
+```
+
+A pre-commit hook is auto-installed on first build (`./gradlew classes`) that runs `spotlessCheck` and `checkstyleMain checkstyleTest`.
+
 ## Architecture
 
 - **Domain**: Order management (create orders, process payments, reserve inventory, generate invoices, publish notifications, enqueue fulfillment)
