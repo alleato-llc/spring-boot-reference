@@ -93,6 +93,7 @@ Available skills in `.claude/skills/`:
 - **configuration** — `@ConfigurationProperties` POJOs with project-name prefix, environment variable binding, nested config decomposition, local dev defaults, sensitive value protection
 - **logging** — SLF4J + Logback, structured JSON output, `@Redacted` annotation for sensitive field protection, log level guidelines
 - **tracing** — Distributed tracing via Micrometer Tracing, correlation ID propagation (HTTP auto, SQS/SNS via message attributes), `TraceAttributes`/`TraceContext` utilities
+- **concurrency** — Virtual threads, structured concurrency, CompletableFuture composition, connection pool protection, no `@Async`
 
 ### Project
 - **project-documentation** — Required documentation structure (README, docs/, feature docs)
