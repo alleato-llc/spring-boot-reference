@@ -13,50 +13,40 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
- * Base class for integration tests. Provides:
- *  - A real Spring Boot app running on a random port
- *  - Postgres connection configured via application-test.yml (start Postgres with docker-compose)
- *  - Flyway migrations applied automatically on startup
- *  - Test AWS SDK clients injected into the real service implementations
- *  - Test doubles for payment client and inventory client
- *  - An {@link OrderClient} for typed HTTP calls to the API
- *  - Automatic reset of all test state between tests
+ * Base class for integration tests. Provides: - A real Spring Boot app running on a random port -
+ * Postgres connection configured via application-test.yml (start Postgres with docker-compose) -
+ * Flyway migrations applied automatically on startup - Test AWS SDK clients injected into the real
+ * service implementations - Test doubles for payment client and inventory client - An {@link
+ * OrderClient} for typed HTTP calls to the API - Automatic reset of all test state between tests
  *
- * All integration tests should extend this class.
+ * <p>All integration tests should extend this class.
  *
- * Prerequisites: Postgres must be running before tests start.
- * Locally: {@code docker-compose up -d}
- * CI: use a service container in your pipeline config.
+ * <p>Prerequisites: Postgres must be running before tests start. Locally: {@code docker-compose up
+ * -d} CI: use a service container in your pipeline config.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @Import(TestConfiguration.class)
 public abstract class BaseIntegrationTest {
 
-    @Autowired
-    protected OrderClient orderClient;
+  @Autowired protected OrderClient orderClient;
 
-    @Autowired
-    protected TestPaymentClient testPaymentClient;
+  @Autowired protected TestPaymentClient testPaymentClient;
 
-    @Autowired
-    protected TestSqsClient testSqsClient;
+  @Autowired protected TestSqsClient testSqsClient;
 
-    @Autowired
-    protected TestSnsClient testSnsClient;
+  @Autowired protected TestSnsClient testSnsClient;
 
-    @Autowired
-    protected TestS3Client testS3Client;
+  @Autowired protected TestS3Client testS3Client;
 
-    @Autowired
-    protected TestInventoryClient testInventoryClient;
+  @Autowired protected TestInventoryClient testInventoryClient;
 
-    @BeforeEach
-    void setUpBase() {
-        testPaymentClient.reset();
-        testSqsClient.reset();
-        testSnsClient.reset();
-        testS3Client.reset();
-        testInventoryClient.reset();
-    }
+  @BeforeEach
+  void setUpBase() {
+    testPaymentClient.reset();
+    testSqsClient.reset();
+    testSnsClient.reset();
+    testS3Client.reset();
+    testInventoryClient.reset();
+  }
 }

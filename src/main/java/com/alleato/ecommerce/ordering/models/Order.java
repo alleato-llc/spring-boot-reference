@@ -1,6 +1,15 @@
 package com.alleato.ecommerce.ordering.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -10,96 +19,124 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    private String customerId;
+  @Column(nullable = false)
+  private String customerId;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private OrderStatus status;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal subtotal;
+  @Column(nullable = false, precision = 10, scale = 2)
+  private BigDecimal subtotal;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal discount;
+  @Column(nullable = false, precision = 10, scale = 2)
+  private BigDecimal discount;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal total;
+  @Column(nullable = false, precision = 10, scale = 2)
+  private BigDecimal total;
 
-    @Column
-    private String paymentTransactionId;
+  @Column private String paymentTransactionId;
 
-    @Column
-    private String inventoryReservationId;
+  @Column private String inventoryReservationId;
 
-    @Column(nullable = false)
-    private Instant createdAt;
+  @Column(nullable = false)
+  private Instant createdAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderLineItem> lineItems = new ArrayList<>();
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<OrderLineItem> lineItems = new ArrayList<>();
 
-    protected Order() {}
+  protected Order() {}
 
-    public Order(String customerId) {
-        this.customerId = customerId;
-        this.status = OrderStatus.PENDING;
-        this.subtotal = BigDecimal.ZERO;
-        this.discount = BigDecimal.ZERO;
-        this.total = BigDecimal.ZERO;
-        this.createdAt = Instant.now();
-    }
+  public Order(String customerId) {
+    this.customerId = customerId;
+    this.status = OrderStatus.PENDING;
+    this.subtotal = BigDecimal.ZERO;
+    this.discount = BigDecimal.ZERO;
+    this.total = BigDecimal.ZERO;
+    this.createdAt = Instant.now();
+  }
 
-    public void addLineItem(String productId, String productName, int quantity, BigDecimal unitPrice) {
-        OrderLineItem item = new OrderLineItem(this, productId, productName, quantity, unitPrice);
-        lineItems.add(item);
-    }
+  public void addLineItem(
+      String productId, String productName, int quantity, BigDecimal unitPrice) {
+    OrderLineItem item = new OrderLineItem(this, productId, productName, quantity, unitPrice);
+    lineItems.add(item);
+  }
 
-    // --- Getters ---
+  // --- Getters ---
 
-    public Long getId() { return id; }
-    public String getCustomerId() { return customerId; }
-    public OrderStatus getStatus() { return status; }
-    public BigDecimal getSubtotal() { return subtotal; }
-    public BigDecimal getDiscount() { return discount; }
-    public BigDecimal getTotal() { return total; }
-    public String getPaymentTransactionId() { return paymentTransactionId; }
-    public String getInventoryReservationId() { return inventoryReservationId; }
-    public Instant getCreatedAt() { return createdAt; }
-    public List<OrderLineItem> getLineItems() { return lineItems; }
+  public Long getId() {
+    return id;
+  }
 
-    // --- Fluent mutators (set field, return this) ---
+  public String getCustomerId() {
+    return customerId;
+  }
 
-    public Order withStatus(OrderStatus status) {
-        this.status = status;
-        return this;
-    }
+  public OrderStatus getStatus() {
+    return status;
+  }
 
-    public Order withSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-        return this;
-    }
+  public BigDecimal getSubtotal() {
+    return subtotal;
+  }
 
-    public Order withDiscount(BigDecimal discount) {
-        this.discount = discount;
-        return this;
-    }
+  public BigDecimal getDiscount() {
+    return discount;
+  }
 
-    public Order withTotal(BigDecimal total) {
-        this.total = total;
-        return this;
-    }
+  public BigDecimal getTotal() {
+    return total;
+  }
 
-    public Order withPaymentTransactionId(String paymentTransactionId) {
-        this.paymentTransactionId = paymentTransactionId;
-        return this;
-    }
+  public String getPaymentTransactionId() {
+    return paymentTransactionId;
+  }
 
-    public Order withInventoryReservationId(String inventoryReservationId) {
-        this.inventoryReservationId = inventoryReservationId;
-        return this;
-    }
+  public String getInventoryReservationId() {
+    return inventoryReservationId;
+  }
+
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public List<OrderLineItem> getLineItems() {
+    return lineItems;
+  }
+
+  // --- Fluent mutators (set field, return this) ---
+
+  public Order withStatus(OrderStatus status) {
+    this.status = status;
+    return this;
+  }
+
+  public Order withSubtotal(BigDecimal subtotal) {
+    this.subtotal = subtotal;
+    return this;
+  }
+
+  public Order withDiscount(BigDecimal discount) {
+    this.discount = discount;
+    return this;
+  }
+
+  public Order withTotal(BigDecimal total) {
+    this.total = total;
+    return this;
+  }
+
+  public Order withPaymentTransactionId(String paymentTransactionId) {
+    this.paymentTransactionId = paymentTransactionId;
+    return this;
+  }
+
+  public Order withInventoryReservationId(String inventoryReservationId) {
+    this.inventoryReservationId = inventoryReservationId;
+    return this;
+  }
 }

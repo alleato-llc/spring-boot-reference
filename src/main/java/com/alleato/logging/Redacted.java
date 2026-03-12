@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a field as containing sensitive data. Fields annotated with {@code @Redacted}
- * are replaced with {@code ***} in {@link RedactingToStringBuilder} output,
- * preventing accidental logging of sensitive values.
+ * Marks a field as containing sensitive data. Fields annotated with {@code @Redacted} are replaced
+ * with {@code ***} in {@link RedactingToStringBuilder} output, preventing accidental logging of
+ * sensitive values.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

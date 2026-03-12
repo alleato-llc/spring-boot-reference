@@ -9,29 +9,29 @@ import software.amazon.awssdk.services.sns.model.PublishRequest;
 /**
  * AWS SNS implementation of {@link NotificationClient}.
  *
- * Publishes messages to SNS topics. The topic ARN is constructed from a
- * configurable prefix and the logical topic name. In tests, the injected
- * {@link SnsClient} is a test implementation that records calls and validates topic ARNs.
+ * <p>Publishes messages to SNS topics. The topic ARN is constructed from a configurable prefix and
+ * the logical topic name. In tests, the injected {@link SnsClient} is a test implementation that
+ * records calls and validates topic ARNs.
  */
 @Component
 public class SnsNotificationClient implements NotificationClient {
 
-    private final SnsClient snsClient;
-    private final OrderingConfiguration.Notification config;
+  private final SnsClient snsClient;
+  private final OrderingConfiguration.Notification config;
 
-    public SnsNotificationClient(SnsClient snsClient,
-                                  OrderingConfiguration.Notification config) {
-        this.snsClient = snsClient;
-        this.config = config;
-    }
+  public SnsNotificationClient(SnsClient snsClient, OrderingConfiguration.Notification config) {
+    this.snsClient = snsClient;
+    this.config = config;
+  }
 
-    @Override
-    public void publish(String topic, String messageBody) {
-        String topicArn = config.getTopicArnPrefix() + ":" + topic;
-        snsClient.publish(PublishRequest.builder()
-                .topicArn(topicArn)
-                .message(messageBody)
-                .messageAttributes(TraceAttributes.snsAttributes())
-                .build());
-    }
+  @Override
+  public void publish(String topic, String messageBody) {
+    String topicArn = config.getTopicArnPrefix() + ":" + topic;
+    snsClient.publish(
+        PublishRequest.builder()
+            .topicArn(topicArn)
+            .message(messageBody)
+            .messageAttributes(TraceAttributes.snsAttributes())
+            .build());
+  }
 }
