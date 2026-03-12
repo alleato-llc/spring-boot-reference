@@ -161,9 +161,3 @@ When creating or modifying a JPA entity:
 - [ ] External computation returns result records, applied by the orchestrator
 - [ ] Getters only — no `set*` methods exposed
 
-## Reference
-
-- `src/main/java/.../models/Order.java` — `with*` fluent mutators, constructor initialization
-- `src/main/java/.../pricing/PricingCalculator.java` — Pure computation returning `PricingResult`
-- `src/main/java/.../pricing/PricingResult.java` — Result record
-- `src/main/java/.../service/OrderService.java` — Orchestrator applying results via `with*`

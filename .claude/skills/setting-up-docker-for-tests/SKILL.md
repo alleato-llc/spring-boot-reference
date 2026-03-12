@@ -196,8 +196,3 @@ In GitLab CI, services are accessed by alias (not localhost), so override the da
 - **Flyway handles schema** — migrations run automatically on test startup
 - **Non-default port** — avoids conflicts with other databases on the developer's machine
 
-## Reference
-
-- `docker-compose.yml` — Local Postgres setup
-- `src/test/resources/application-test.yml` — Test database configuration
-- `src/test/java/.../support/BaseIntegrationTest.java` — Base class (no container code)

@@ -94,10 +94,3 @@ order.withStatus(OrderStatus.CONFIRMED)
 
 The `with*` prefix distinguishes mutators from getters (`.status()` returns a value, `.withStatus(...)` sets one).
 
-## Reference
-
-- `src/main/java/.../service/OrderService.java` — `*Service` with dependencies
-- `src/main/java/.../pricing/PricingCalculator.java` — Standalone logic, not `*Service`
-- `src/main/java/.../payment/PaymentClient.java` — Interface named after domain concept
-- `src/main/java/.../payment/StripePaymentClient.java` — Implementation prefixed with technology
-- `src/main/java/.../models/Order.java` — `with*` fluent mutators

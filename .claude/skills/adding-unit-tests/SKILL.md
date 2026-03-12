@@ -26,7 +26,7 @@ Unit tests verify pure business logic — components with no external dependenci
 ## Template
 
 ```java
-package com.alleato.ecommerce.ordering.pricing;
+package {org}.{project}.{domain};
 
 import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,6 +70,3 @@ class MyServiceTest {
 - Use AssertJ for all assertions
 - Use helper methods to reduce test setup boilerplate
 
-## Reference
-
-See `src/test/java/.../pricing/PricingCalculatorTest.java` for a complete example with nested groups, edge cases, and boundary tests.

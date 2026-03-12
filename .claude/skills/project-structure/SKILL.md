@@ -1,63 +1,78 @@
 ---
 name: project-structure
-description: Organizes a Spring Boot project into domain-oriented packages. Core domain uses layered packages (controller/service/models/repository), supporting subdomains are flat packages. Use when creating a new project, adding a new domain area, or restructuring packages.
+description: Organizes a Spring Boot project into domain-oriented packages. Core domain uses layered packages (controller/service/models/repository), supporting subdomains and infrastructure are sibling packages at the project level. Use when creating a new project, adding a new domain area, or restructuring packages.
 ---
 
 # Project Structure
 
 ## Philosophy
 
-Organize packages to reflect the **domain**, not technical layers. The core domain (what the app is about) keeps a layered structure for clarity. Supporting subdomains (external integrations, utilities) are flat packages — they're simple enough that layers add overhead without value.
+Organize packages to reflect the **domain**, not technical layers. The core domain (what the app is about) keeps a layered structure for clarity. Supporting subdomains and infrastructure are sibling packages at the project level — they have clear boundaries and can grow independently without requiring refactors.
 
-## Core domain layout
-
-The core domain is the primary business capability — the reason the app exists. It uses layered packages because it has enough complexity (API, orchestration, persistence, models) to benefit from separation:
+## Package hierarchy
 
 ```
-com.example.ordering/
-├── controller/         REST API — receives requests, returns responses
-├── service/            Orchestrators — coordinate multiple components
-├── models/             Domain entities, DTOs, value objects, enums
-└── repository/         Data access (Spring Data JPA)
+${org}/                                  e.g., com.example/
+├── logging/                             Infrastructure — @Redacted, RedactingToStringBuilder
+├── tracing/                             Infrastructure — TraceAttributes, TraceContext
+└── ${project}/                          e.g., ecommerce/
+    ├── ${core_domain}/                  Core domain (layered) — e.g., ordering/
+    │   ├── controller/                  REST API — receives requests, returns responses
+    │   │   ├── exception/               GlobalExceptionHandler (@ControllerAdvice)
+    │   │   └── response/                Response records (ErrorResponse, ValidationErrorResponse)
+    │   ├── service/                     Orchestrators — coordinate multiple components
+    │   ├── models/                      Domain entities, DTOs, value objects, enums
+    │   ├── repository/                  Data access (Spring Data JPA)
+    │   └── exception/                   Domain exception hierarchy ({ProjectName}*Exception)
+    ├── ${subdomain}/                    Subdomain (flat) — e.g., payment/
+    │   ├── *Client.java                 (interface — contract boundary)
+    │   └── *ClientImpl.java             (implementation, prefixed by technology)
+    ├── ${subdomain}/                    Subdomain (flat) — e.g., notification/
+    │   ├── *Client.java                 (interface)
+    │   ├── *Event.java                  (event record)
+    │   └── *ClientImpl.java             (implementation)
+    └── ${subdomain}/                    Subdomain (flat) — e.g., pricing/
+        ├── *Calculator.java             (pure computation)
+        └── *Result.java                 (result record)
 ```
+
+## Why subdomains are siblings, not nested
+
+Subdomains are sibling packages at the project level (`${org}.${project}.payment/`), not nested under the core domain (`${org}.${project}.ordering.payment/`).
+
+Rationale:
+- **No refactor when a subdomain grows** — if `payment/` later gets its own API endpoint or is consumed by a second domain, its package path doesn't change
+- **Clear boundaries** — sibling packages communicate that subdomains are independent capabilities, not internals of the core domain
+- **Imports work the same** — Java packages are flat namespaces; nesting is a communication choice, not a technical one
+
+Trade-off: `@SpringBootApplication` defaults to scanning the package it lives in and below. Since subdomains are siblings, add `scanBasePackages`:
+
+```java
+@SpringBootApplication(scanBasePackages = "${org}.${project}")
+```
+
+## Core domain
+
+The core domain is the primary business capability — the reason the app exists. It uses layered packages because it has enough complexity (API, orchestration, persistence, models) to benefit from separation.
 
 Rules:
 - **One core domain per application.** If you have two core domains, consider separate apps or a modular monolith.
 - **Models shared across subdomains** live in the core `models/` package. If a model is only used within a subdomain, it can live in that subdomain's package.
+- **Domain exceptions** live in the core domain's `exception/` package — they carry the domain name (e.g., `OrderingNotFoundException`).
 
-## Supporting subdomain layout
+## Supporting subdomains
 
-Supporting subdomains provide capabilities the core domain depends on — payment processing, notifications, inventory. They're flat packages (no internal `controller/service/models` layers):
-
-```
-com.example.ordering/
-├── payment/
-│   ├── PaymentClient.java              (interface — contract boundary)
-│   └── StripePaymentClient.java        (implementation)
-├── notification/
-│   ├── NotificationClient.java         (interface)
-│   └── SnsNotificationClient.java      (implementation)
-├── fulfillment/
-│   ├── FulfillmentClient.java          (interface)
-│   ├── FulfillmentPayload.java         (payload record)
-│   └── SqsFulfillmentClient.java       (implementation)
-├── inventory/
-│   ├── InventoryClient.java            (interface + nested types)
-│   └── HttpInventoryClient.java        (implementation)
-├── invoicing/
-│   ├── InvoiceService.java             (orchestrates generation + storage)
-│   ├── DocumentClient.java             (interface — S3)
-│   └── S3DocumentClient.java           (implementation)
-└── pricing/
-    ├── PricingCalculator.java          (pure computation)
-    └── PricingResult.java              (result record)
-```
+Supporting subdomains provide capabilities the core domain depends on — payment processing, notifications, inventory. They're flat packages (no internal `controller/service/models` layers).
 
 Rules:
 - **Name the package after the domain concept**, not the technology: `payment/` not `stripe/`, `notification/` not `sns/`.
 - **Keep it flat.** If a subdomain needs its own `models/` subpackage, it's a sign the subdomain is complex enough to be its own module or service.
 - **Interfaces live in the subdomain package.** The interface is the contract boundary — implementations sit next to it.
 - **Payload/event records** (e.g., `FulfillmentPayload`, `OrderConfirmedEvent`) belong in the subdomain that produces them — they're part of that boundary's contract.
+
+## Infrastructure packages
+
+Infrastructure packages (`logging/`, `tracing/`) live at the `${org}` level — outside `${project}`. They are not domain-specific — they provide cross-cutting capabilities used by any domain or subdomain.
 
 ## Package size constraint
 
@@ -123,15 +138,19 @@ Each package is now 2–3 files, clearly scoped to one domain concept.
 Tests mirror the production package structure. Shared test infrastructure lives in `support/`:
 
 ```
-src/test/java/com/example/ordering/
-├── support/                    Shared test infrastructure
-│   ├── BaseIntegrationTest.java
-│   ├── TestConfiguration.java
-│   ├── clients/                Typed test clients and interface-level doubles
-│   └── aws/clients/            AWS SDK-level test doubles
-├── controller/                 Tests for controller (integration tests)
-├── repository/                 Tests for repository/migrations
-└── pricing/                    Tests for pricing (unit tests)
+src/test/java/${org}/${project}/
+├── ${core_domain}/
+│   ├── support/                    Shared test infrastructure
+│   │   ├── BaseIntegrationTest.java
+│   │   ├── TestConfiguration.java
+│   │   ├── clients/                Typed test clients and interface-level doubles
+│   │   └── aws/clients/            AWS SDK-level test doubles
+│   ├── controller/                 Tests for controller (integration tests)
+│   └── repository/                 Tests for repository/migrations
+├── ${subdomain}/                   Tests for subdomain (unit tests)
+└── ...
+src/test/java/${org}/
+└── logging/                        Tests for infrastructure utilities
 ```
 
 Rules:
@@ -142,7 +161,7 @@ Rules:
 
 ## Adding a new subdomain
 
-1. Create a package named after the domain concept: `src/main/java/.../shipping/`
+1. Create a sibling package at the project level: `src/main/java/${org}/${project}/shipping/`
 2. Define the interface (contract boundary): `ShippingClient.java`
 3. Add the implementation: `FedExShippingClient.java`
 4. Add any payload/event records: `ShipmentRequest.java`
@@ -151,6 +170,3 @@ Rules:
 
 Do not create `controller/`, `service/`, `models/` subpackages within the subdomain unless it genuinely needs that complexity.
 
-## Reference
-
-See the project structure in `src/main/java/com/alleato/ecommerce/ordering/` for a complete example.

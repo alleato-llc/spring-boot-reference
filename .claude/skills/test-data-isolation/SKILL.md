@@ -127,6 +127,3 @@ When writing or reviewing integration tests, verify:
 - [ ] Assertions reference the test's own request/response — not hardcoded expected values
 - [ ] Test doubles are reset between tests (handled by `BaseIntegrationTest`)
 
-## Reference
-
-See `src/test/java/.../controller/OrderApiIntegrationTest.java` for a complete example.

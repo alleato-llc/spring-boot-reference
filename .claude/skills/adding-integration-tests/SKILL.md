@@ -92,10 +92,10 @@ assertThatThrownBy(() -> myClient.createThing(badRequest))
 ## Template
 
 ```java
-package com.alleato.ecommerce.ordering.controller;
+package {org}.{project}.{domain}.controller;
 
-import com.alleato.ecommerce.ordering.models.*;
-import com.alleato.ecommerce.ordering.support.BaseIntegrationTest;
+import {org}.{project}.{domain}.models.*;
+import {org}.{project}.{domain}.support.BaseIntegrationTest;
 import org.junit.jupiter.api.*;
 import org.springframework.http.*;
 
@@ -289,7 +289,3 @@ docker-compose up -d    # Start Postgres
 - Verify that failure paths do NOT trigger downstream side effects
 - Typed test clients assert success status by default; error responses throw exceptions
 
-## Reference
-
-See `src/test/java/.../controller/OrderApiIntegrationTest.java` for a complete example.
-See `src/test/java/.../support/clients/OrderClient.java` for the typed test client pattern.

@@ -299,11 +299,3 @@ public record OrderConfirmedEvent(String event, long orderId, String customerId,
 - **One handler method per message type.** Don't multiplex on a `type` field inside a single handler.
 - **Idempotent processing** — consumers must handle duplicate delivery gracefully.
 
-## Reference
-
-- `src/main/java/.../controller/OrderController.java` — Thin controller
-- `src/main/java/.../service/OrderService.java` — Orchestrating service
-- `src/main/java/.../repository/OrderRepository.java` — Spring Data repository
-- `src/main/java/.../payment/PaymentClient.java` — Client interface with result records
-- `src/main/java/.../fulfillment/FulfillmentPayload.java` — Pub/sub payload record
-- `src/main/java/.../notification/OrderConfirmedEvent.java` — Event payload record

@@ -278,11 +278,3 @@ Each SDK call follows this sequence inside the simulator:
 | SDK client is a concrete class, you want SDK-level testing | **This pattern** |
 | No SDK, custom REST API | `integrating-external-api` (define your own interface) |
 
-## Reference examples
-
-See these files in the project for complete working examples:
-- `src/test/java/.../support/aws/clients/simulators/ExpectedException.java` — Generic exception rule infrastructure
-- `src/test/java/.../support/aws/clients/simulators/SqsSimulator.java` — Stateless simulator (direct request list)
-- `src/test/java/.../support/aws/clients/simulators/SnsSimulator.java` — Stateless simulator (direct request list)
-- `src/test/java/.../support/aws/clients/simulators/S3Simulator.java` — Stateful simulator (unified request log + pattern matching)
-- `src/test/java/.../support/TestConfiguration.java` — Test bean wiring

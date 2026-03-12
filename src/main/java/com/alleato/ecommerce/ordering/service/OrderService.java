@@ -1,17 +1,21 @@
 package com.alleato.ecommerce.ordering.service;
 
-import com.alleato.ecommerce.ordering.invoicing.InvoiceService;
+import com.alleato.ecommerce.ordering.exception.OrderingIllegalArgumentException;
+import com.alleato.ecommerce.ordering.exception.OrderingInternalServerException;
+import com.alleato.ecommerce.ordering.exception.OrderingNotFoundException;
+import com.alleato.ecommerce.invoicing.InvoiceService;
 import com.alleato.ecommerce.ordering.models.*;
-import com.alleato.ecommerce.ordering.fulfillment.FulfillmentClient;
-import com.alleato.ecommerce.ordering.fulfillment.FulfillmentPayload;
-import com.alleato.ecommerce.ordering.inventory.InventoryClient;
-import com.alleato.ecommerce.ordering.inventory.InventoryClient.ReservationItem;
-import com.alleato.ecommerce.ordering.notification.NotificationClient;
-import com.alleato.ecommerce.ordering.notification.OrderConfirmedEvent;
-import com.alleato.ecommerce.ordering.payment.PaymentClient;
-import com.alleato.ecommerce.ordering.payment.PaymentClient.PaymentResult;
-import com.alleato.ecommerce.ordering.pricing.PricingCalculator;
-import com.alleato.ecommerce.ordering.pricing.PricingResult;
+import com.alleato.ecommerce.fulfillment.FulfillmentClient;
+import com.alleato.ecommerce.fulfillment.FulfillmentPayload;
+import com.alleato.ecommerce.inventory.InventoryClient;
+import com.alleato.ecommerce.inventory.InventoryClient.InsufficientStockException;
+import com.alleato.ecommerce.inventory.InventoryClient.ReservationItem;
+import com.alleato.ecommerce.notification.NotificationClient;
+import com.alleato.ecommerce.notification.OrderConfirmedEvent;
+import com.alleato.ecommerce.payment.PaymentClient;
+import com.alleato.ecommerce.payment.PaymentClient.PaymentResult;
+import com.alleato.ecommerce.pricing.PricingCalculator;
+import com.alleato.ecommerce.pricing.PricingResult;
 import com.alleato.ecommerce.ordering.repository.OrderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Orchestrates the order workflow:
@@ -94,9 +99,13 @@ public class OrderService {
             List<ReservationItem> reservationItems = order.getLineItems().stream()
                     .map(li -> new ReservationItem(li.getProductId(), li.getQuantity()))
                     .toList();
-            var confirmation = inventoryClient.reserveItems(
-                    String.valueOf(order.getId()), reservationItems);
-            order.withInventoryReservationId(confirmation.reservationId());
+            try {
+                var confirmation = inventoryClient.reserveItems(
+                        String.valueOf(order.getId()), reservationItems);
+                order.withInventoryReservationId(confirmation.reservationId());
+            } catch (InsufficientStockException e) {
+                throw new OrderingIllegalArgumentException(e.getMessage(), Map.of("productId", e.getProductId()));
+            }
 
             // Generate and store invoice
             invoiceService.generateAndStore(order);
@@ -120,20 +129,14 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Order getOrder(Long id) {
         return orderRepository.findByIdWithLineItems(id)
-                .orElseThrow(() -> new OrderNotFoundException(id));
+                .orElseThrow(() -> new OrderingNotFoundException("Order not found: " + id));
     }
 
     private String serialize(Object payload) {
         try {
             return objectMapper.writeValueAsString(payload);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Failed to serialize payload", e);
-        }
-    }
-
-    public static class OrderNotFoundException extends RuntimeException {
-        public OrderNotFoundException(Long id) {
-            super("Order not found: " + id);
+            throw new OrderingInternalServerException("Failed to serialize payload", e);
         }
     }
 }

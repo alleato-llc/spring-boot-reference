@@ -174,13 +174,3 @@ testS3Client.throwOnPut(
 - No mocking frameworks needed
 - Test client validates inputs just like the real service would
 
-## Reference examples
-
-See these files in the project for complete working examples:
-- `src/test/java/.../support/aws/clients/TestSqsClient.java` — SQS test client
-- `src/test/java/.../support/aws/clients/TestSnsClient.java` — SNS test client
-- `src/test/java/.../support/aws/clients/TestS3Client.java` — S3 test client
-- `src/main/java/.../fulfillment/SqsFulfillmentClient.java` — Uses SqsClient
-- `src/main/java/.../notification/SnsNotificationClient.java` — Uses SnsClient
-- `src/main/java/.../invoicing/S3DocumentClient.java` — Uses S3Client
-- `src/test/java/.../support/TestConfiguration.java` — Test bean wiring

@@ -206,6 +206,7 @@ This project includes reusable [Claude Code skills](https://docs.anthropic.com/e
 | `naming-conventions` | Class suffix rules — `*Service` for orchestrators, `*Client` for external boundaries, descriptive names for standalone logic. |
 | `entity-design` | JPA entities with `with*` fluent mutators, pure computation returning result records, no public setters. |
 | `dependency-injection` | Constructor injection only, no inline dependency construction, `@Bean` methods own object creation. |
+| `error-handling` | Single project exception (`OrderingException`) with factory methods, centralized `@ControllerAdvice`, context maps instead of exception hierarchies. |
 
 #### Project
 

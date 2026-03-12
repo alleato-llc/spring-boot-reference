@@ -1,6 +1,6 @@
 package com.alleato.ecommerce.ordering.support.clients;
 
-import com.alleato.ecommerce.ordering.payment.PaymentClient;
+import com.alleato.ecommerce.payment.PaymentClient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -59,7 +59,3 @@ Postgres must be running (`docker-compose up -d`). Flyway applies migrations aga
 - JPA field names use camelCase (Hibernate auto-maps)
 - Always verify with `FlywayMigrationIntegrationTest`
 
-## Reference
-
-- Migrations: `src/main/resources/db/migration/`
-- Schema test: `src/test/java/.../repository/FlywayMigrationIntegrationTest.java`

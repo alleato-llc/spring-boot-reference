@@ -90,8 +90,3 @@ public class AppConfiguration {
 
 The `@Bean` method takes configuration via `@Value` and produces the fully-constructed object. Components then receive the object via constructor injection — they never know how it was built.
 
-## Reference
-
-- `src/main/java/.../inventory/HttpInventoryClient.java` — receives `RestClient` via constructor injection (correct)
-- `src/main/java/.../fulfillment/SqsFulfillmentClient.java` — `@Value` for config (`queueUrl`) + injection for dependency (`SqsClient`)
-- `src/test/java/.../support/TestConfiguration.java` — `@Bean` methods that construct and wire test doubles

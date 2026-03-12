@@ -202,10 +202,3 @@ Note: since you own the interface, the `ReservationRequest` record bundles the m
 - Test double implements your interface, not an SDK client interface
 - You own the contract boundary (the interface), so you can design it for testability
 
-## Reference examples
-
-See these files in the project for complete working examples:
-- `src/main/java/.../inventory/InventoryClient.java` — Client interface
-- `src/main/java/.../inventory/HttpInventoryClient.java` — HTTP implementation
-- `src/test/java/.../support/clients/TestInventoryClient.java` — In-memory test implementation
-- `src/test/java/.../support/TestConfiguration.java` — Test bean wiring

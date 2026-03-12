@@ -1,6 +1,6 @@
 package com.alleato.ecommerce.ordering.support.clients;
 
-import com.alleato.ecommerce.ordering.inventory.InventoryClient;
+import com.alleato.ecommerce.inventory.InventoryClient;
 
 import java.util.*;
 import java.util.function.Predicate;

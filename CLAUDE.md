@@ -83,6 +83,9 @@ Available skills in `.claude/skills/`:
 - **naming-conventions** — Class suffix rules (`*Service`, `*Client`, `*Calculator`)
 - **entity-design** — JPA entities with `with*` fluent mutators, result records for computation
 - **dependency-injection** — Constructor injection only, no inline dependency construction, `@Bean` methods own object creation
+- **error-handling** — Minimal exception hierarchy (abstract `OrderingException` base + 4 subclasses), centralized `@ControllerAdvice` maps exception type to HTTP status, context maps for structured error details
+- **logging** — SLF4J + Logback, structured JSON output, `@Redacted` annotation for sensitive field protection, log level guidelines
+- **tracing** — Distributed tracing via Micrometer Tracing, correlation ID propagation (HTTP auto, SQS/SNS via message attributes), `TraceAttributes`/`TraceContext` utilities
 
 ### Project
 - **project-documentation** — Required documentation structure (README, docs/, feature docs)

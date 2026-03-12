@@ -29,9 +29,4 @@ public class OrderController {
         var order = orderService.getOrder(id);
         return ResponseEntity.ok(OrderResponse.from(order));
     }
-
-    @ExceptionHandler(OrderService.OrderNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(OrderService.OrderNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
 }

@@ -1,14 +1,15 @@
 package com.alleato.ecommerce.ordering.controller;
 
-import com.alleato.ecommerce.ordering.fulfillment.FulfillmentPayload;
+import com.alleato.ecommerce.ordering.controller.response.ErrorResponse;
+import com.alleato.ecommerce.fulfillment.FulfillmentPayload;
 import com.alleato.ecommerce.ordering.models.CreateOrderRequest;
 import com.alleato.ecommerce.ordering.models.CreateOrderRequest.LineItemRequest;
 import com.alleato.ecommerce.ordering.models.OrderResponse;
 import com.alleato.ecommerce.ordering.models.OrderStatus;
-import com.alleato.ecommerce.ordering.notification.OrderConfirmedEvent;
+import com.alleato.ecommerce.notification.OrderConfirmedEvent;
 import com.alleato.ecommerce.ordering.support.clients.TestInventoryClient.ReservationCall;
 import com.alleato.ecommerce.ordering.support.clients.TestPaymentClient.ChargeInvocation;
-import com.alleato.ecommerce.ordering.inventory.InventoryClient.ReservationItem;
+import com.alleato.ecommerce.inventory.InventoryClient.ReservationItem;
 import com.alleato.ecommerce.ordering.support.BaseIntegrationTest;
 import com.alleato.ecommerce.ordering.support.clients.OrderClient.ApiException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -142,6 +143,9 @@ class OrderApiIntegrationTest extends BaseIntegrationTest {
             assertThat(event.orderId()).isEqualTo(order.id());
             assertThat(event.customerId()).isEqualTo(request.customerId());
             assertThat(event.total()).isEqualByComparingTo(expectedSubtotal(request));
+
+            assertThat(snsRequest.messageAttributes()).containsKey("traceId");
+            assertThat(snsRequest.messageAttributes().get("traceId").stringValue()).isNotBlank();
         }
 
         @Test
@@ -199,6 +203,9 @@ class OrderApiIntegrationTest extends BaseIntegrationTest {
             assertThat(payload.orderId()).isEqualTo(order.id());
             assertThat(payload.customerId()).isEqualTo(request.customerId());
             assertThat(payload.itemCount()).isEqualTo(request.items().size());
+
+            assertThat(sqsRequest.messageAttributes()).containsKey("traceId");
+            assertThat(sqsRequest.messageAttributes().get("traceId").stringValue()).isNotBlank();
         }
     }
 
@@ -295,7 +302,13 @@ class OrderApiIntegrationTest extends BaseIntegrationTest {
             assertThatThrownBy(() -> orderClient.createOrder(createSimpleOrderRequest(randomId("cust"), null,
                     createLineItemRequest(randomId("prod"), "Widget", 1, "50.00"))))
                     .isInstanceOf(ApiException.class)
-                    .satisfies(ex -> assertThat(((ApiException) ex).status()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR));
+                    .satisfies(ex -> {
+                        var apiEx = (ApiException) ex;
+                        assertThat(apiEx.status()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+                        var error = deserialize(apiEx.body(), ErrorResponse.class);
+                        assertThat(error.message()).isEqualTo("An internal error occurred");
+                        assertThat(error.status()).isEqualTo(500);
+                    });
         }
 
         @Test
@@ -307,7 +320,31 @@ class OrderApiIntegrationTest extends BaseIntegrationTest {
             assertThatThrownBy(() -> orderClient.createOrder(createSimpleOrderRequest(randomId("cust"), null,
                     createLineItemRequest(randomId("prod"), "Widget", 1, "50.00"))))
                     .isInstanceOf(ApiException.class)
-                    .satisfies(ex -> assertThat(((ApiException) ex).status()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR));
+                    .satisfies(ex -> {
+                        var apiEx = (ApiException) ex;
+                        assertThat(apiEx.status()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+                        var error = deserialize(apiEx.body(), ErrorResponse.class);
+                        assertThat(error.message()).isEqualTo("An internal error occurred");
+                        assertThat(error.status()).isEqualTo(500);
+                    });
+        }
+
+        @Test
+        void returns400WhenProductOutOfStock() {
+            var outOfStockProduct = randomId("prod");
+            testInventoryClient.setOutOfStock(outOfStockProduct);
+
+            assertThatThrownBy(() -> orderClient.createOrder(createSimpleOrderRequest(randomId("cust"), null,
+                    createLineItemRequest(outOfStockProduct, "Widget", 1, "50.00"))))
+                    .isInstanceOf(ApiException.class)
+                    .satisfies(ex -> {
+                        var apiEx = (ApiException) ex;
+                        assertThat(apiEx.status()).isEqualTo(HttpStatus.BAD_REQUEST);
+                        var error = deserialize(apiEx.body(), ErrorResponse.class);
+                        assertThat(error.message()).contains("Insufficient stock");
+                        assertThat(error.status()).isEqualTo(400);
+                        assertThat(error.context()).containsEntry("productId", outOfStockProduct);
+                    });
         }
     }
 
@@ -323,7 +360,9 @@ class OrderApiIntegrationTest extends BaseIntegrationTest {
                     .satisfies(ex -> {
                         var apiEx = (ApiException) ex;
                         assertThat(apiEx.status()).isEqualTo(HttpStatus.NOT_FOUND);
-                        assertThat(apiEx.body()).contains("Order not found: " + nonExistentId);
+                        var error = deserialize(apiEx.body(), ErrorResponse.class);
+                        assertThat(error.message()).contains("Order not found: " + nonExistentId);
+                        assertThat(error.status()).isEqualTo(404);
                     });
         }
     }
