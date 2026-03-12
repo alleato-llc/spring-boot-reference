@@ -11,3 +11,4 @@ bin/
 .DS_Store
 .claude/settings.local.json
 docs/PLANNING.md
+.dependency-check-data/
