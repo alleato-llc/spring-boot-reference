@@ -57,8 +57,8 @@ If your docker-compose has more than one or two services, it's a signal:
 - Dependencies with complex interactions (custom Redis commands, Elasticsearch analyzers) — test doubles can't reproduce them
 
 **Use test doubles instead:**
-- External services with public SDKs (AWS, Stripe) — see `integrating-external-sdk`
-- External APIs you call over HTTP — see `integrating-external-api`
+- External services with public SDKs (AWS, Stripe) — see `testing-boundaries`
+- External APIs you call over HTTP — see `testing-boundaries`
 - Simple cache interactions (vanilla Redis get/set)
 - Other team services or internal APIs
 

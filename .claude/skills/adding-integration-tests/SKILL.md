@@ -269,7 +269,7 @@ testInventoryClient.throwWhen(
         () -> new RuntimeException("Connection refused"));
 ```
 
-This tests how your code handles external service failures. See `integrating-external-sdk` and `integrating-external-api` for details.
+This tests how your code handles external service failures. See `testing-boundaries` for details.
 
 ## Prerequisites
 

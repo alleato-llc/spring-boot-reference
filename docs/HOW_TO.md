@@ -64,7 +64,7 @@ The project uses standard Gradle structure. Import as a Gradle project in Intell
 3. Create a test double (e.g., `support/clients/TestShippingClient.java`)
 4. Wire in `TestConfiguration`
 5. Add to `BaseIntegrationTest` (field + reset)
-6. See the `integrating-external-api` or `integrating-external-sdk` skill for detailed steps
+6. See the `testing-boundaries` skill for detailed steps
 
 ### Adding a new database column
 

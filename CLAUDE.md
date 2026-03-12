@@ -88,7 +88,7 @@ Available skills in `.claude/skills/`:
 - **component-design** — Controllers, services, repositories, clients, pub/sub — responsibility, method sizing, composition
 - **naming-conventions** — Class suffix rules (`*Service`, `*Client`, `*Calculator`)
 - **entity-design** — JPA entities with `with*` fluent mutators, result records for computation
-- **dependency-injection** — Constructor injection only, no inline dependency construction, `@Bean` methods own object creation
+- **inversion-of-control** — Constructor injection only, no inline dependency construction, `@Bean` methods own object creation
 - **error-handling** — Minimal exception hierarchy (abstract `OrderingException` base + 4 subclasses), centralized `@ControllerAdvice` maps exception type to HTTP status, context maps for structured error details
 - **configuration** — `@ConfigurationProperties` POJOs with project-name prefix, environment variable binding, nested config decomposition, local dev defaults, sensitive value protection
 - **logging** — SLF4J + Logback, structured JSON output, `@Redacted` annotation for sensitive field protection, log level guidelines
@@ -101,8 +101,6 @@ Available skills in `.claude/skills/`:
 - **adding-integration-tests** — Integration tests for API endpoints
 - **adding-unit-tests** — Unit tests for pure business logic
 - **test-data-isolation** — Test independence via random IDs and fresh data per test
-- **adding-flyway-migrations** — Database migrations + schema test
-- **integrating-external-sdk** — SDK-level test doubles (AWS)
-- **integrating-external-sdk-no-interface** — Simulator pattern for SDK clients with no interface
-- **integrating-external-api** — Interface-level test doubles (REST APIs)
+- **schema-migrations** — Database migrations + schema test
+- **testing-boundaries** — Test doubles for external dependencies: SDK interfaces, SDK simulators, custom REST API interfaces
 - **setting-up-docker-for-tests** — Docker infrastructure for tests

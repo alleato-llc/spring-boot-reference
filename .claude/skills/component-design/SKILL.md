@@ -244,7 +244,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 **Responsibility**: Wrap an external service boundary. The interface defines the contract; implementations handle the protocol (HTTP, SDK, etc.).
 
-See `naming-conventions` for suffix rules and `integrating-external-sdk` / `integrating-external-api` for the full patterns. This section covers method design.
+See `naming-conventions` for suffix rules and `testing-boundaries` for the full patterns. This section covers method design.
 
 ### Method design
 

@@ -222,9 +222,7 @@ This project includes reusable [Claude Code skills](https://docs.anthropic.com/e
 | `adding-unit-tests` | Adds unit tests for pure business logic with no Spring context. |
 | `test-data-isolation` | Ensures tests are independent via random IDs, fresh data per test, and contextual domain setup in `@BeforeEach`. |
 | `adding-flyway-migrations` | Adds a Flyway migration and updates the schema test. |
-| `integrating-external-sdk` | Integrates an external service that has a public SDK (e.g., AWS). Creates an SDK-level test double that intercepts SDK calls. |
-| `integrating-external-sdk-no-interface` | Simulator pattern for SDK clients with no interface. Produces a mock client, tracks invocations, and exposes a domain-language API. |
-| `integrating-external-api` | Integrates an external service with no SDK. Defines a client interface with an HTTP implementation and an in-memory test double. |
+| `testing-boundaries` | Test doubles for external dependencies: SDK interfaces, SDK simulators, custom REST API interfaces. |
 | `setting-up-docker-for-tests` | Sets up Docker-managed Postgres for integration tests. Includes a decision framework for what to dockerize vs use test doubles. |
 
 ### Adopting in your project
