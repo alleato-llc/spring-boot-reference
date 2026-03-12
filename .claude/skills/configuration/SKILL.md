@@ -1,6 +1,7 @@
 ---
 name: configuration
 description: Configuration management for Spring Boot applications. @ConfigurationProperties POJOs with project-name prefix, environment variable binding, nested config decomposition, local dev defaults, profile-based overrides, sensitive value protection.
+version: 1.0.0
 ---
 
 # Configuration

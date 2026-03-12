@@ -1,6 +1,7 @@
 ---
 name: tracing
 description: Distributed tracing for Spring Boot applications. Micrometer Tracing setup, correlation ID lifecycle, HTTP auto-propagation, SQS/SNS message attribute propagation, consumer MDC extraction.
+version: 1.0.0
 ---
 
 # Tracing

@@ -1,6 +1,7 @@
 ---
 name: naming-conventions
 description: Naming rules for Spring Boot classes — *Service for orchestrators, *Client for external service boundaries, descriptive names for standalone logic. Use when creating new classes or reviewing naming.
+version: 1.0.0
 ---
 
 # Naming Conventions

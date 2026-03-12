@@ -1,6 +1,7 @@
 ---
 name: integrating-external-sdk-no-interface
 description: Creates a simulator for an external SDK when the SDK client is a concrete class (no interface to implement). The simulator produces a mock client, tracks invocations, and exposes a domain-language API for test assertions. Use when integrating an SDK that doesn't provide a client interface.
+version: 1.0.0
 ---
 
 # Integrating an External SDK (No Interface)

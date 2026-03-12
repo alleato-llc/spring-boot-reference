@@ -1,6 +1,7 @@
 ---
 name: component-design
 description: Design guidelines for Spring Boot components — controllers, services, repositories, clients, and pub/sub abstractions. Covers file responsibility, method sizing, composition, overloading, and overriding. Use when creating or reviewing controllers, services, repositories, or client classes.
+version: 1.0.0
 ---
 
 # Component Design

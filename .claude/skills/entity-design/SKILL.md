@@ -1,6 +1,7 @@
 ---
 name: entity-design
 description: Design patterns for JPA entities — fluent with* mutators instead of setters, pure computation returning result records, and constructor-based initialization. Use when creating or modifying JPA entities.
+version: 1.0.0
 ---
 
 # Entity Design

@@ -1,6 +1,7 @@
 ---
 name: integrating-external-sdk
 description: Integrates an external service that has a public SDK (e.g. AWS SQS, SNS, S3). Creates a test implementation of the SDK client so the real domain code runs in tests with SDK calls intercepted. Use when adding a new AWS service integration or any external service with a public SDK.
+version: 1.0.0
 ---
 
 # Integrating an External Service via Public SDK

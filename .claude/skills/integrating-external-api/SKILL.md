@@ -1,6 +1,7 @@
 ---
 name: integrating-external-api
 description: Integrates an external service that has no public SDK — we define our own client interface with an HTTP implementation for production and an in-memory test implementation. Use when adding an integration with an external REST API, partner API, or internal service with no SDK.
+version: 1.0.0
 ---
 
 # Integrating an External Service via Custom Client Interface

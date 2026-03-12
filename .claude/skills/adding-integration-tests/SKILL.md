@@ -1,6 +1,7 @@
 ---
 name: adding-integration-tests
 description: Adds integration tests for Spring Boot API endpoints. Tests boot the full app with Postgres (via docker-compose), exercise the API via HTTP, and assert on observable side effects (response, DB state, SDK call recordings). Use when writing integration tests or testing API endpoints.
+version: 1.0.0
 ---
 
 # Adding Integration Tests

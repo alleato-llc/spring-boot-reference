@@ -1,6 +1,7 @@
 ---
 name: adding-unit-tests
 description: Adds unit tests for pure business logic components that have no external dependencies. No Spring context, no database, no test doubles. Use when testing algorithms, calculations, validation logic, or any class with no injected dependencies.
+version: 1.0.0
 ---
 
 # Adding Unit Tests

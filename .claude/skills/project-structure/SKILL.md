@@ -1,6 +1,7 @@
 ---
 name: project-structure
 description: Organizes a Spring Boot project into domain-oriented packages. Core domain uses layered packages (controller/service/models/repository), supporting subdomains and infrastructure are sibling packages at the project level. Use when creating a new project, adding a new domain area, or restructuring packages.
+version: 1.0.0
 ---
 
 # Project Structure

@@ -1,6 +1,7 @@
 ---
 name: logging
 description: Logging standards for Spring Boot applications. SLF4J + Logback, structured JSON output, @Redacted annotation for sensitive field protection, log level guidelines, where to log.
+version: 1.0.0
 ---
 
 # Logging

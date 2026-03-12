@@ -1,6 +1,7 @@
 ---
 name: adding-flyway-migrations
 description: Adds a Flyway database migration for schema changes. Creates a versioned SQL migration file and updates the FlywayMigrationIntegrationTest to verify the new column/table. Use when adding database columns, tables, or indexes.
+version: 1.0.0
 ---
 
 # Adding Flyway Migrations

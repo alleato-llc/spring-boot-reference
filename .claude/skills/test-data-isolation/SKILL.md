@@ -1,6 +1,7 @@
 ---
 name: test-data-isolation
 description: Ensures integration tests are independent by using random IDs and fresh data per test. Tests must not depend on data from other tests. Use when writing or reviewing integration tests.
+version: 1.0.0
 ---
 
 # Test Data Isolation

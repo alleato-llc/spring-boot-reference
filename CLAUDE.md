@@ -6,6 +6,10 @@ Spring Boot reference project codifying best practices for Java/Spring Boot appl
 
 This is one of several reference projects tracked by [engineering-standards](../engineering-standards/). See the skill matrix there for cross-project coverage, gaps, and priorities. When adding, removing, or renaming skills in this project, update the skill matrix in engineering-standards to stay in sync.
 
+### Skill Versions
+
+Skills follow semantic versioning defined in [engineering-standards](../engineering-standards/VERSIONING.md). The `version` field in each skill's frontmatter reflects which engineering-standards version this project implements. When updating a skill, bump the version to match engineering-standards and update the matrix.
+
 ## Build & Test
 
 ```bash

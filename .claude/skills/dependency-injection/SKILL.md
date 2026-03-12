@@ -1,6 +1,7 @@
 ---
 name: dependency-injection
 description: Dependency injection rules for Spring Boot — constructor injection only, no inline dependency construction, @Bean methods own object creation. Use when creating or reviewing components that have dependencies.
+version: 1.0.0
 ---
 
 # Dependency Injection

@@ -1,6 +1,7 @@
 ---
 name: setting-up-docker-for-tests
 description: Sets up Docker-managed Postgres for integration tests. Tests expect the database to already be running — locally via docker-compose, in CI via service containers. No Testcontainers. Use when bootstrapping test infrastructure or adding a database dependency to tests.
+version: 1.0.0
 ---
 
 # Setting Up Docker for Tests

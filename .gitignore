@@ -9,3 +9,5 @@ bin/
 *.iml
 .vscode/
 .DS_Store
+.claude/settings.local.json
+docs/PLANNING.md
