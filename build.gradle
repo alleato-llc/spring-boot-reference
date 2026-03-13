@@ -56,6 +56,12 @@ checkstyle {
     maxWarnings = 0
 }
 
+configurations.checkstyle {
+    resolutionStrategy {
+        force 'commons-beanutils:commons-beanutils:1.11.0'
+    }
+}
+
 dependencyCheck {
     failBuildOnCVSS = 7.0f
     formats = ['HTML', 'JSON']
