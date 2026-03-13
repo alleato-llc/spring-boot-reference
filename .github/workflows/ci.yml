@@ -35,6 +35,13 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h localhost -p 15432 -U test; do
+            echo "Waiting for Postgres..."
+            sleep 1
+          done
+
       - name: Spotless check
         run: ./gradlew spotlessCheck
 
@@ -46,6 +53,9 @@ jobs:
 
   dependency-scan:
     runs-on: ubuntu-latest
+    # Skip for Dependabot PRs — they cannot access repo secrets (NVD_API_KEY),
+    # causing NVD rate limiting (HTTP 429) and scan failure.
+    if: github.actor != 'dependabot[bot]'
 
     steps:
       - uses: actions/checkout@v4
