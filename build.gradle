@@ -28,7 +28,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-database-postgresql'
 
     // AWS SDK (for real implementations)
-    implementation platform('software.amazon.awssdk:bom:2.42.11')
+    implementation platform('software.amazon.awssdk:bom:2.42.16')
     implementation 'software.amazon.awssdk:sns'
     implementation 'software.amazon.awssdk:sqs'
     implementation 'software.amazon.awssdk:s3'
