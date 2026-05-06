@@ -1,6 +1,6 @@
 ---
 name: error-handling
-description: Error handling patterns for Spring Boot applications. Minimal exception hierarchy (abstract base + 4 subclasses), centralized @ControllerAdvice maps exception type to HTTP status, context maps for structured error details.
+description: Error handling patterns for Spring Boot applications. Minimal exception hierarchy (abstract base + 4 subclasses), centralized @ControllerAdvice maps exception type to HTTP status, context maps for structured error details. Use when adding exception types, defining error responses, or reviewing error mapping.
 version: 1.0.0
 ---
 

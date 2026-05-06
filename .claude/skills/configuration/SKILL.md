@@ -1,6 +1,6 @@
 ---
 name: configuration
-description: Configuration management for Spring Boot applications. @ConfigurationProperties POJOs with project-name prefix, environment variable binding, nested config decomposition, local dev defaults, profile-based overrides, sensitive value protection.
+description: Configuration management for Spring Boot applications. @ConfigurationProperties POJOs with project-name prefix, environment variable binding, nested config decomposition, local dev defaults, profile-based overrides, sensitive value protection. Use when defining application configuration, adding environment-bound properties, or setting up profile-based overrides.
 version: 1.0.0
 ---
 
@@ -19,7 +19,7 @@ version: 1.0.0
 ## Package layout
 
 - Config classes live in `{org}.{project}.{core_domain}.config` (e.g., `com.alleato.ecommerce.ordering.config/`)
-- The root config class is named `{ProjectName}Configurationuration` (e.g., `OrderingConfigurationuration`)
+- The root config class is named `{ProjectName}Configuration` (e.g., `OrderingConfiguration`)
 
 ## @ConfigurationProperties POJO
 

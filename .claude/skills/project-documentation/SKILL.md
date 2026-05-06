@@ -1,6 +1,6 @@
 ---
 name: project-documentation
-description: Defines the required documentation structure for every project. Covers root-level files (README, CONTRIBUTING, LICENSE, SECURITY, CLAUDE.md) and docs/ directory (architecture, testing, database, migrations, release, security design, how-to, and per-feature docs).
+description: Defines the required documentation structure for every project. Covers root-level files (README, CONTRIBUTING, LICENSE, SECURITY, CLAUDE.md) and docs/ directory (architecture, testing, database, migrations, release, security design, how-to, and per-feature docs). Use when creating a new project, adding required documentation files, or reviewing documentation completeness.
 version: 1.0.0
 ---
 
